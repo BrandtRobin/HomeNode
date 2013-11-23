@@ -1,0 +1,23 @@
+/* Normally, this will look just like the Fixed-Only example */
+.leftHalf{ width: 130px; float: left; padding-right: 10px;}
+.rightHalf{ width: 130px; float: left; padding-left: 10px;}
+
+.centered{ width:300px; margin: 0 auto;} 
+
+/* When the window is less than 300px, the new css rules will be applied */
+@media (max-width: 300px){
+    .leftHalf{ 
+        width: 200px; 
+        color: red; 
+        margin-left: 20px; 
+        padding: 0px; 
+        float:none 
+    }
+    .rightHalf{ 
+        width: 200px; 
+        color: blue; 
+        margin-left: 20px;  
+        padding: 0px; 
+        float:none 
+    }
+}

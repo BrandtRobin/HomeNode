@@ -1,0 +1,16 @@
+{
+  "name": "HomeNode",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "mongoose": "*",
+    "express-mongoose": "*",
+  },
+  "devDependencies": {
+    "nodemon": "*"
+  }
+}
