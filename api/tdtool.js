@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var units = mongoose.model('Unit');
+var groups = mongoose.model('Group');
 var configs = mongoose.model('Config');
 var autotimes = mongoose.model('Autotime');
 var sys = require('sys');
@@ -8,6 +9,13 @@ var child;
 
 listunits = function(req, res) {
 	units.find({}, null, {sort:{_id: 1}},function (err, data) {
+			if (err) throw err;
+			res.send(data); 
+		});
+}
+
+listgroups = function(req, res) {
+	groups.find({}, null, {sort:{_id: 1}},function (err, data) {
 			if (err) throw err;
 			res.send(data); 
 		});
@@ -24,6 +32,16 @@ getautovalue = function(req, res) {
 	// HANDLE ERRORS IF RECORD DOES NOT EXIST!
 	autotimes.findById(1, function (err, data) {
 		res.send(data.active);
+	});
+}
+
+changeautogroup = function(req, res) {
+	// HANDLE ERRORS IF RECORD DOES NOT EXIST!
+	// ÄNDRA AUTOGRUPP I CONFIGS COLLECTION
+	console.log(req.body);
+	configs.update({_id:1},{group:req.body.group},{upsert:true}, function (err, data) {
+		if (err) throw err;
+		res.json(JSON.stringify(true));
 	});
 }
 
@@ -79,17 +97,17 @@ toggleall = function(req, res) {
 		tmp.state = false;
 		str = str + "--off ";
 	}
-	units.find({}, null, {sort:{_id: 1}},function (err, data) {
+	groups.findById(tmp.group,function (err, data) {
 		if (err) throw err;
-		data.forEach( function(i) { 
-     		child = exec(str + i._id, function (error, stdout, stderr) {
+		var members = data.members;
+		members.forEach( function(i) {
+     	 	child = exec(str + i, function (error, stdout, stderr) {
     			if (error !== null) {
         			console.log('exec error: ' + error);
     			}
     		});
-    		
 		});
-		units.update({},{state:tmp.state},{multi:true},function (err, data) {
+		units.update({_id:{$in:members}},{$set:{state:tmp.state}},{multi:true},function (err, data) {
 			if (err) throw err;
 			if (!tmp.internalcall || tmp.internalcall === undefined) {
 				res.json(JSON.stringify(true));
@@ -132,6 +150,40 @@ deleteunit = function(req, res) {
     });
 }
 
+addgroup = function(req, res) {
+	var toInsert = req.body;
+	console.log('trying to add group: ' + JSON.stringify(toInsert));
+  	groups.findById(toInsert._id, function (err, data) {
+      if (data === undefined || data === null) {
+      	console.log('creating');
+        groups.create(toInsert, function (err, data) {
+          if (err) throw err;
+        });
+        res.json(JSON.stringify(true));
+      }
+      else {
+        res.json(JSON.stringify(false));
+        console.log('group allready exists!');
+      }
+    });
+}
+
+deletegroup = function(req, res) {
+	var toRemove = req.body;
+  	groups.findById(toRemove._id, function (err, data) {
+      if (data !== undefined || data !== null) {
+        groups.remove({_id:toRemove._id}, function (err, data) {
+          if (err) throw err;
+        });
+        res.json(JSON.stringify(true));
+      }
+      else {
+        res.json(JSON.stringify(false));
+        console.log('group does not exists!');
+      }
+    });
+}
+
 syncunit = function(req, res) {
 	var str = "tdtool --learn ";
 	var tmp = req.body;
@@ -151,9 +203,13 @@ syncunit = function(req, res) {
 exports.toggleall = toggleall;
 exports.toggleone = toggleone;
 exports.listunits = listunits;
+exports.listgroups = listgroups;
 exports.getTimes = getTimes;
 exports.toggleauto = toggleauto;
 exports.getautovalue = getautovalue;
+exports.changeautogroup = changeautogroup;
 exports.addunit = addunit;
 exports.deleteunit = deleteunit;
+exports.deletegroup = deletegroup;
+exports.addgroup = addgroup;
 exports.syncunit = syncunit;

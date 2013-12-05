@@ -7,7 +7,8 @@ var schema = mongoose.Schema({
 	downHour: Number,
 	downMinute: Number,
 	lat: String,
-	lon: String
+	lon: String,
+	group: Number
 });
 
 module.exports = mongoose.model('Config', schema);

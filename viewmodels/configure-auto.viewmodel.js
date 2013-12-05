@@ -3,14 +3,15 @@ var ViewModel = function () {
 
   console.log('loading Configure viewmodel');
   self.units = ko.observableArray([]);
+  self.groups = ko.observableArray([]);
   self.upTime = ko.observable(null);
   self.downTime = ko.observable(null);
   self.newId = ko.observable(null);
   self.newName = ko.observable(null);
+  self.AutoGroup = ko.observable(null);
   self.AutoState = ko.observable('Laddar...');
   self.lat = ko.observable('Laddar...');
   self.lon = ko.observable('Laddar...');
-  self.latloncheck = ko.observable('Ange 9 tecken, tex 59.274302');
 
   self.loadUnits = function() {
     $("document").ready(function() {
@@ -18,6 +19,40 @@ var ViewModel = function () {
         self.units(data);
       });
     });
+  };
+
+  self.loadGroups = function() {
+    $("document").ready(function() {
+      $.getJSON("groups", function(data) {
+        self.groups(data);
+      });
+    });
+  };
+
+  self.ChangeAutoGroup = function(group) {
+    console.log('changing autogroup to: ' + group._id);
+    data = {
+      group:group._id
+    };
+      $.ajax({
+        type: "POST",
+        url: "changeautogroup", // your POST target goes here
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(data), // message to send goes here
+        success: function (data)
+        {
+          if (data) {
+            $('#loadingModal').modal('show');
+            setTimeout(function() {
+            $('#loadingModal').modal('hide');}, 3000);
+            self.loadTimes();
+          }
+          if (!data) {
+            console.log('autogroup write error')
+          }
+        }
+      });
   };
 
   self.updateCoordinates = function() {
@@ -97,6 +132,7 @@ var ViewModel = function () {
         self.downTime(data[0].downHour + ':' + data[0].downMinute);
         self.lat(data[0].lat);
         self.lon(data[0].lon);
+        self.AutoGroup(data[0].group);
       });
     });
   };
@@ -131,9 +167,9 @@ var ViewModel = function () {
   
   (function () {
     self.loadUnits();
+    self.loadGroups();
     self.loadTimes();
     self.getAutoValue();
-    //self.checkLatLon();
     self.gmap();
   } (self));
 };

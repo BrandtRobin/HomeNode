@@ -3,12 +3,24 @@ var ViewModel = function () {
 
   console.log('loading Index viewmodel');
   self.units = ko.observableArray([]);
+  self.groups = ko.observableArray([]);
 
   self.loadUnits = function() {
     //$('#loadingModal').modal('show');
     $("document").ready(function() {
       $.getJSON("units", function(data) {
         self.units(data);
+        //$('#loadingModal').modal('hide');
+        //$('#loading').hide();
+      });
+    });
+  };
+
+  self.loadGroups = function() {
+    //$('#loadingModal').modal('show');
+    $("document").ready(function() {
+      $.getJSON("groups", function(data) {
+        self.groups(data);
         //$('#loadingModal').modal('hide');
         //$('#loading').hide();
       });
@@ -34,8 +46,9 @@ var ViewModel = function () {
     return true;
   };
 
-  self.toggleAllOn = function() {
+  self.toggleGroupOn = function(group) {
     data = {
+      group: group._id,
       state: true
     };
     $.ajax({
@@ -49,14 +62,15 @@ var ViewModel = function () {
             $('#loadingModal').modal('show');
             setTimeout(function() {
               $('#loadingModal').modal('hide');}, 3000);
+              self.loadUnits();
           }
     });
-    self.loadUnits();
     return true;
   };
 
-  self.toggleAllOff = function() {
+  self.toggleGroupOff = function(group) {
     data = {
+      group: group._id,
       state: false
     };
     $.ajax({
@@ -78,5 +92,6 @@ var ViewModel = function () {
 
   (function () {
     self.loadUnits();
+    self.loadGroups();
   } (self));
 };

@@ -5,7 +5,7 @@ Home automation with Nodejs.
 
 Requirements: Nodejs , mongodb, tdtools.
 
-* Unpack the compressed archive in the db folder and use the dumpdir HomeNode to import it into a mongodb database called HomeNode.
+* Unpack the compressed archive db.tar.gz and use the dumpdir HomeNode to import it into a mongodb database called HomeNode.
   ( mongorestore -d HomeNode db/HomeNode )
 * Install nodejs modules with npm install
 * Start the server with nodemon server.js

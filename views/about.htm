@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>0.0.1</title>
+    <title>0.0.2</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -18,6 +18,7 @@
     <link href="css/starter-template.css" rel="stylesheet">
 
   </head>
+  <script type="text/javascript" language="javascript" src="js/jquery-2.0.3.min.js"></script>
   <body>
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -32,8 +33,15 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li><a href="telldus">Lampor</a></li>
-          <li><a href="configure">Inställningar</a></li>
-          <li><a href="#">Om</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inställningar<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/configure">Tellstick</a></li>
+              <li><a href="/configure-groups">Tellstick grupper</a></li>
+              <li><a href="/configure-auto">Tellstick Automation</a></li>
+            </ul>
+          </li>
+          <li class="active"><a href="#">Om</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -43,6 +51,10 @@
   <br><br>
   <div class="container">
       <div class="col-md-8">
+        <strong>0.0.2</strong>
+          <li>Groups!</li>
+          <li>Automated on/off on selected group.</li>
+        <br>
         <strong>0.0.1</strong>
           <li>Functionality tested with a basic tellstick device (not duo or net).</li>
           <li>Add/remove/learn devices from the webinterface.</li>
@@ -50,9 +62,8 @@
           <li>Currently uses some static settings such as protocol=arctech and self-learning switches.</li>
           <li>Automaticly turning on/off all configured outlets (only by time of day calculated by coordinates).</li>
           <li>Most things should be responsive and viewable in a mobile device</li>
-        <br>
+          <br>
         <strong>Planned</strong>
-          <li>Proper groups.</li>
           <li>Manual time selection for automatic on/off for groups.</li>
           <li>A better landing page.</li>
           <li>Language selection, Swedish and English.</li>

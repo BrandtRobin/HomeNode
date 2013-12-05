@@ -21,10 +21,7 @@
   <script type="text/javascript" language="javascript" src="js/jquery-2.0.3.min.js"></script>
   <script type="text/javascript" language="javascript" src="js/knockout-2.1.0.js"></script>
   <script type="text/javascript" language="javascript" src="js/knockout.mapping-latest.js"></script>
-  <script type="text/javascript" language="javascript" src="viewmodels/configure-auto.viewmodel.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-  <script type="text/javascript" language="javascript" src="js/bootstrap-typeahead.js"></script>
-  <script type="text/javascript" language="javascript" src="js/jquery.addresspicker.js"></script>
+  <script type="text/javascript" language="javascript" src="viewmodels/configure-tellstick-groups.viewmodel.js"></script>
   <script>
   $(document).ready(function (){
     ko.applyBindings(new ViewModel());
@@ -59,36 +56,26 @@
   </div>
   <br><br>
   <div class="container">
+    <!-- <div class="alert alert-warning alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>Viktigt!</strong> Lägg till eller ta bort enheter, Skriv till konfigen, synkronisera sedan enheten om det är en ny.
+    </div> -->
     <div class="col-md-4">
       <div class="panel panel-black">
         <div class="panel-heading">
-          Automatisk tändning och släckning
+          Grupper
         </div>
-        <table class="table">
-          <tbody>
+         <table class="table">
+          <tbody data-bind="foreach: groups">
             <tr>
-              <td class="col-md-9">Stängs av: <span data-bind="text: upTime"></span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td class="col-md-9">Slås på: <span data-bind="text: downTime"></span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td class="col-md-9">Auto: <span data-bind="text: AutoState"></span></td>
-              <td class="col-md-3"><button class="btn btn-primary" data-bind="click: $root.toggleAutomaticTime">Ändra</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="table">
-          <tbody>
-            <tr>
-              <td class="col-md-12">
+              <td data-bind="text: _id"></td>
+              <td data-bind="text: name"></td>
+              <td data-bind="text: members"></td>
+              <td>
                 <center>
-                  <p>Vilken grupp skall användas.</p>
-                  <ul class="pagination" data-bind="foreach: groups">
-                    <li data-bind="css: { 'active': _id == $root.AutoGroup() }"><a href="#" data-bind="text: _id, click: $root.ChangeAutoGroup"></a></li>
-                  </ul>
+                  <button class="btn btn-danger pull-right" data-bind="click: $root.warningModal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
                 </center>
               </td>
             </tr>
@@ -99,37 +86,41 @@
     <div class="col-md-4">
       <div class="panel panel-black">
         <div class="panel-heading">
-          Inställning av tid
+          Lägg till ny grupp
         </div>
          <table class="table">
           <tbody>
             <tr>
               <td>
-                <span class="label label-warning">Info</span><p>Ändra koordinaterna manuellt eller använd kartan, tiden uppdateras varje halvtimma.</p>
                 <form id="addForm" role="form">
                   <div class="form-group">
-                    <label>Lattitud</label>
-                    <input type="text" class="form-control" data-bind="value: lat, valueUpdate: 'afterkeydown', event: { keyup: $root.checkLatLon}" />
+                    <label>Id</label>
+                    <input type="text" class="form-control" placeholder="Ex: 1" data-bind="value: newId" />
                   </div>
                   <div class="form-group">
-                    <label>Longditud</label>
-                    <input type="text" class="form-control" data-bind="value: lon, valueUpdate: 'afterkeydown', event: { keyup: $root.checkLatLon}" />
+                    <label>Namn</label>
+                    <input type="text" class="form-control" placeholder="Ex: Sovrummet" data-bind="value: newName" />
                   </div>
+                  <!-- <div class="form-group">
+                    <label>Enheter</label>
+                    <input type="text" class="form-control" placeholder="Ex: 1,2,3,4" data-bind="value: members" />
+                  </div> -->
                 </form>
               </td>
             </tr>
-            <!-- <tr>
+            <tr>
               <td>
                 <center>
-                  <span class="label label-success" data-bind="text: latloncheck, value: state, css: { 'label-danger': state }"></span>
+                  <ul class="pagination" data-bind="foreach: units">
+                    <li><a href="#" data-bind="text: _id, click: $root.addMember"></a></li>
+                  </ul>
                 </center>
               </td>
-            </tr> -->
+            </tr>
             <tr>
               <td>
-                  <button type="submit" class="btn btn-primary btn-block" data-bind="click: $root.updateCoordinates">
-                    Spara koordinater
-                  </button>
+                <button type="submit" class="btn btn-primary btn-block" data-bind="text: groupMembers, click: $root.addGroup">
+                </button>
               </td>
             </tr>
           </tbody>
@@ -137,49 +128,7 @@
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="col-md-8">
-      <div class="panel panel-black">
-        <div class="panel-heading">
-          Hitta koordinater med karta
-        </div>
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>
-                <span class="label label-warning">Info</span><p>Skriv in din adress, en röd markör går sedan att flytta runt på för att ställa in koordinater.</p>
-              </td>
-            </tr>
-            <!-- <tr>
-              <td>
-                <input class="form-control" placeholder="Skriv adress..." id="addresspicker_map" />
-              </td>
-            </tr> -->
-            <tr>
-              <td>
-                <div class="input-group">
-                  <input class="form-control" placeholder="Skriv adress..." id="addresspicker_map" />
-                  <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary" data-bind="click: $root.updateCoordinates">Spara koordinater</button>
-                  </span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  <div style="width:100%;height:300px;">
-                      <div id="map_canvas" style="width:100%; height:100%"></div>
-                      <div id="location" class=""></div>
-                  </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-    
- 
+
   <!-- Modal -->
   <div class="modal fade " id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-center">
@@ -197,7 +146,7 @@
       </div>
     </div>
   </div>
- <!-- Modal Remove unit -->
+ <!-- Modal Remove group -->
   <div class="modal fade " id="removalModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-center">
       <div class="modal-content">
@@ -206,10 +155,10 @@
           <h4 class="modal-title">Varning!</h4>
         </div>
         <div class="modal-body">
-          <p>Vill du verkligen ta bort den valda enheten?</p>
+          <p>Vill du verkligen ta bort den valda gruppen?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bind="click: $root.deleteUnit" />Ja</button>
+          <button type="button" class="btn btn-primary" data-bind="click: $root.deleteGroup" />Ja</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Nej</button>
         </div>
       </div>
@@ -220,6 +169,5 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.min.js"></script>
 
-  </script>
   </body>
 </html>

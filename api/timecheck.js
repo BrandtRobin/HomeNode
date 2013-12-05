@@ -50,39 +50,46 @@ updatetime = function(upH, upM, downH, downM) {
 
 function check() {
 	setTimeout(function() {
-		autotimes.findById(1, function (err, data) {
-			if (data.active) {
-				var date = new Date();
-				configs.find({_id:1},function (err, data) {
-					if (err) throw err;
-					if (data[0].upHour == date.getHours()) {
-						if (data[0].upMinute == date.getMinutes()) {
-							var data = {
-								body: {
-									state:false,
-									internalcall:true
+		var group;
+		configs.findById(1, function (err, data) {
+			if (err) throw err;
+			group = data.group;
+			if (group !== null || group !== undefined) {
+				autotimes.findById(1, function (err, data) {
+					if (data.active) {
+						var date = new Date();
+						configs.find({_id:1},function (err, data) {
+							if (err) throw err;
+							if (data[0].upHour == date.getHours()) {
+								if (data[0].upMinute == date.getMinutes()) {
+									console.log(data.group);
+									var data = {
+										body: {
+											group:group,
+											state:false,
+											internalcall:true
+										}
+									};
+									tdtool.toggleall(data,function(){
+									});
 								}
-							};
-							tdtool.toggleall(data,function(){
-							});
-						}
-					}
-					else if (data[0].downHour == date.getHours()) {
-						if (data[0].downMinute == date.getMinutes()) {
-							var data = {
-								body: {
-									state:true,
-									internalcall:true
+							}
+							else if (data[0].downHour == date.getHours()) {
+								if (data[0].downMinute == date.getMinutes()) {
+									var data = {
+										body: {
+											group:group,
+											state:true,
+											internalcall:true
+										}
+									};
+									tdtool.toggleall(data,function(){
+									});
 								}
-							};
-							tdtool.toggleall(data,function(){
-							});
-						}
+							}
+						});
 					}
 				});
-			}
-			else {
-				//skip the checking
 			}
 		});
 		check();

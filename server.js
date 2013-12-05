@@ -26,14 +26,18 @@ mongoose.connect('mongodb://localhost/HomeNode', function (err) {
 
 	// URLS
 	app.get('/units', tdtool.listunits);
+	app.get('/groups', tdtool.listgroups);
 	app.get('/times', tdtool.getTimes);
 	app.post('/toggle', tdtool.toggleone);
 	app.post('/all', tdtool.toggleall);
 	app.post('/add', tdtool.addunit);
 	app.post('/deleteunit', tdtool.deleteunit);
+	app.post('/deletegroup', tdtool.deletegroup);
+	app.post('/addgroup', tdtool.addgroup);
 	app.post('/updateconfig', tellstick.updateConf);
 	app.get('/toggleauto', tdtool.toggleauto);
 	app.get('/getauto', tdtool.getautovalue);
+	app.post('/changeautogroup', tdtool.changeautogroup);
 	app.post('/updatecoords', tellstick.updatecoords);
 	app.post('/syncunit', tdtool.syncunit);
 	app.get('/', function(req, res){
@@ -47,6 +51,9 @@ mongoose.connect('mongodb://localhost/HomeNode', function (err) {
 		});
 	app.get('/configure', function(req, res){
 		  res.sendfile(__dirname + '/views/configure-tellstick.htm');
+		});
+	app.get('/configure-groups', function(req, res){
+		  res.sendfile(__dirname + '/views/configure-tellstick-groups.htm');
 		});
 	app.get('/configure-auto', function(req, res){
 		  res.sendfile(__dirname + '/views/configure-auto.htm');
