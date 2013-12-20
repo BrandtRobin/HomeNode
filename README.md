@@ -10,7 +10,11 @@ Requirements: Nodejs , mongodb, tdtools.
 * Install nodejs modules with npm install
 * Start the server with nodemon server.js
 * Access the server on localhost:8888
+* The user starting server.js need to be able to run sudo without password in /etc/sudoers"
 
+0.0.2
+ * Groups! 
+ * Automated on/off on selected group.
 
 0.0.1
  * Functionality tested with a basic tellstick device (not duo or net).
