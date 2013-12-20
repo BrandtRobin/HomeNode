@@ -1,7 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="">
@@ -17,64 +16,70 @@
     <!-- Custom styles for this template -->
     <link href="css/starter-template.css" rel="stylesheet">
 
-  </head>
-  <script type="text/javascript" language="javascript" src="js/jquery-2.0.3.min.js"></script>
-  <body>
-  <div class="navbar navbar-inverse navbar-fixed-top">
+</head>
+<script type="text/javascript" language="javascript" src="js/jquery-2.0.3.min.js"></script>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="brand" href="/"> <img src="pics/test.png"></a>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="telldus">Lampor</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inställningar<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="/configure">Tellstick</a></li>
-              <li><a href="/configure-groups">Tellstick grupper</a></li>
-              <li><a href="/configure-auto">Tellstick Automation</a></li>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="/"> <img src="pics/test.png"></a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="telldus">Lampor</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inställningar<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/configure">Tellstick</a></li>
+                        <li><a href="/configure-groups">Tellstick grupper</a></li>
+                        <li><a href="/configure-auto">Tellstick Automation</a></li>
+                    </ul>
+                </li>
+                <li class="active"><a href="#">Om</a></li>
             </ul>
-          </li>
-          <li class="active"><a href="#">Om</a></li>
-        </ul>
-      </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
-  </div>
+</div>
 
 
-  <br><br>
-  <div class="container">
-      <div class="col-md-8">
+<br><br>
+
+<div class="container">
+    <div class="col-md-8">
+        <strong>0.0.3</strong>
+        <li>Auto calculated sun-up and sun-down depending on coordinates, or manually selected time.</li>
+        <li>Set up/down to auto/man/disabled</li>
+        <br>
         <strong>0.0.2</strong>
-          <li>Groups!</li>
-          <li>Automated on/off on selected group.</li>
+        <li>Groups!</li>
+        <li>Automated on/off on selected group.</li>
         <br>
         <strong>0.0.1</strong>
-          <li>Functionality tested with a basic tellstick device (not duo or net).</li>
-          <li>Add/remove/learn devices from the webinterface.</li>
-          <li>Uses mongodb to keep settings for tellstick.conf, which can be written on demand.</li>
-          <li>Currently uses some static settings such as protocol=arctech and self-learning switches.</li>
-          <li>Automaticly turning on/off all configured outlets (only by time of day calculated by coordinates).</li>
-          <li>Most things should be responsive and viewable in a mobile device</li>
-          <br>
+        <li>Functionality tested with a basic tellstick device (not duo or net).</li>
+        <li>Add/remove/learn devices from the webinterface.</li>
+        <li>Uses mongodb to keep settings for tellstick.conf, which can be written on demand.</li>
+        <li>Currently uses some static settings such as protocol=arctech and self-learning switches.</li>
+        <li>Automaticly turning on/off all configured outlets (only by time of day calculated by coordinates).</li>
+        <li>Most things should be responsive and viewable in a mobile device</li>
+        <br>
         <strong>Planned</strong>
-          <li>Manual time selection for automatic on/off for groups.</li>
-          <li>A better landing page.</li>
-          <li>Language selection, Swedish and English.</li>
-        </ul>
-      </div>
-  </div>
-  
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/bootstrap.min.js"></script>
+        <li>Use divs instead of tables where possible.</li>
+        <li>A better landing page.</li>
+        <li>Language selection, Swedish and English.</li>
+        <li>Error handling if mongodb is not connected at server startup.</li>
+    </div>
+</div>
 
-  </body>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/bootstrap.min.js"></script>
+
+</body>
 </html>

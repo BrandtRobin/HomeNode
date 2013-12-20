@@ -8,7 +8,15 @@ var schema = mongoose.Schema({
 	downMinute: Number,
 	lat: String,
 	lon: String,
-	group: Number
+	group: Number,
+	mandownHour: Number,
+	mandownMinute: Number,
+	manupHour: Number,
+	manupMinute: Number,
+	manUpActive: Boolean,
+	manDownActive: Boolean,
+	autoUpActive: Boolean,
+	autoDownActive: Boolean,
 });
 
 module.exports = mongoose.model('Config', schema);
