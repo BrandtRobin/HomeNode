@@ -18,7 +18,7 @@ You need to assure that the telldusd service is started for this application to 
 
 0.0.4
  * Sonos support (volume, start,stop,pause. tested with radiostations and spotify.
-   IP-adress of sonos bridge or main speaker need to be configured in /api/sonos.js for now.
+   IP-address of sonos bridge or main speaker need to be configured in /api/sonos.js for now.
  * English interface.
 
 0.0.3
