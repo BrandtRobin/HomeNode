@@ -16,6 +16,11 @@ You need to assure that the telldusd service is started for this application to 
 * Access the server on localhost:8888
 * The user starting server.js need to be able to run sudo without password in /etc/sudoers"
 
+0.0.4
+ * Sonos support (volume, start,stop,pause. tested with radiostations and spotify.
+   IP-adress of sonos bridge or main speaker need to be configured in /api/sonos.js for now.
+ * English interface.
+
 0.0.3
  * Auto calculated sun-up and sun-down depending on coordinates, or manually selected time.
  * Set up/down to auto/man/disabled

@@ -33,12 +33,12 @@ var ViewModel = function () {
 			var i = self.members.indexOf(unit._id);
 			self.members.splice(i, 1);
 			self.members.sort();
-			self.groupMembers(self.members() + ' Lägg till');
+			self.groupMembers('Lägg till ' + self.members());
 		}
 		else {
 			self.members.push(unit._id);
 			self.members.sort();
-			self.groupMembers(self.members() + ' Lägg till');
+			self.groupMembers('Lägg till ' + self.members());
 		}
 		if (self.members().length == 0) {
 			self.groupMembers('Inga enheter valda');

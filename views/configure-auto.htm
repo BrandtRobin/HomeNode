@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>0.0.3</title>
+    <title>0.0.4</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -37,20 +37,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="/"> <img src="pics/test.png"></a>
+			<a class="navbar-brand" href="/">HomeNode 0.0.4</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="telldus">Lampor</a></li>
+                <li><a href="/telldus">Tellstick</a></li>
+                <li><a href="/sonos">Sonos</a></li>
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inställningar<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configure<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/configure">Tellstick</a></li>
-                        <li><a href="/configure-groups">Tellstick grupper</a></li>
-                        <li><a href="/configure-auto">Tellstick Automation</a></li>
+                        <li><a href="/configure">Tellstick units</a></li>
+                        <li><a href="/configure-groups">Tellstick groups</a></li>
+                        <li><a href="/configure-auto">Tellstick automation</a></li>
                     </ul>
                 </li>
-                <li><a href="about">Om</a></li>
+                <li><a href="/about">About</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
@@ -62,18 +63,18 @@
     <div class="col-md-8">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Automatisk tändning och släckning
+                Timecontrolled on/off
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Släckning</p>
+                        <p>Off</p>
                     </div>
                 </div>
                 <div class=row>
                     <div class="col-md-5">
                         <div class="input-group">
-                            <span class="input-group-addon">Manuell</span>
+                            <span class="input-group-addon">Manual</span>
                             <input type="text" class="form-control" placeholder="ex 12:10" data-bind="value: ManUpTime">
                         </div>
                     </div>
@@ -100,13 +101,13 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Tändning</p>
+                        <p>On</p>
                     </div>
                 </div>
                 <div class=row>
                     <div class="col-md-5">
                         <div class="input-group">
-                            <span class="input-group-addon">Manuell</span>
+                            <span class="input-group-addon">Manual</span>
                             <input type="text" class="form-control" placeholder="ex 12:10"
                                    data-bind="value: ManDownTime">
                         </div>
@@ -136,7 +137,7 @@
                     <div class
                     "col-md-12">
                     <center>
-                        <button class="btn btn-primary" data-bind="click: $root.SaveChangeManAuto">Spara inställningar
+                        <button class="btn btn-primary" data-bind="click: $root.SaveChangeManAuto">Save changes
                         </button>
                     </center>
                 </div>
@@ -147,10 +148,9 @@
                 <div class
                 "col-md-12">
                 <center>
-                    <p>Vilken grupp skall detta användas på?</p>
+                    <p>Apply above settings to group.</p>
                     <ul class="pagination" data-bind="foreach: groups">
-                        <li data-bind="css: { 'active': _id == $root.AutoGroup() }"><a href="#"
-                                                                                       data-bind="text: _id, click: $root.ChangeAutoGroup"></a>
+                        <li data-bind="css: { 'active': _id == $root.AutoGroup() }"><a href="#"data-bind="text: _id, click: $root.ChangeAutoGroup"></a>
                         </li>
                     </ul>
                 </center>
@@ -165,16 +165,14 @@
     <div class="col-md-8">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Hitta koordinater med karta
+                Coordinates
             </div>
             <table class="table">
                 <tbody>
                 <tr>
                     <td>
                         <span class="label label-warning">Info</span>
-
-                        <p>Skriv in din adress, en röd markör går sedan att flytta runt på för att ställa in
-                            koordinater.</p>
+                        <p>Type in your adress to save a positions coordinates.</p>
                     </td>
                 </tr>
                 <!-- <tr>
@@ -187,8 +185,8 @@
                         <div class="input-group">
                             <input class="form-control" placeholder="Skriv adress..." id="addresspicker_map"/>
                   <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary" data-bind="click: $root.updateCoordinates">Spara
-                        koordinater
+                    <button type="submit" class="btn btn-primary" data-bind="click: $root.updateCoordinates">
+                        Save
                     </button>
                   </span>
                         </div>
@@ -209,24 +207,22 @@
     <div class="col-md-4">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Inställning av tid
+                Manual coordinates
             </div>
             <table class="table">
                 <tbody>
                 <tr>
                     <td>
                         <span class="label label-warning">Info</span>
-
-                        <p>Ändra koordinaterna manuellt eller använd kartan, tiden uppdateras varje halvtimma.</p>
-
+                        <p>Values are autoupdated when the map is used.<br>Note that the sunup and sundown are calculated based on these coordinates every 30 minutes.</p>
                         <form id="addForm" role="form">
                             <div class="form-group">
-                                <label>Lattitud</label>
+                                <label>Lat</label>
                                 <input type="text" class="form-control"
                                        data-bind="value: lat, valueUpdate: 'afterkeydown', event: { keyup: $root.checkLatLon}"/>
                             </div>
                             <div class="form-group">
-                                <label>Longditud</label>
+                                <label>Lon</label>
                                 <input type="text" class="form-control"
                                        data-bind="value: lon, valueUpdate: 'afterkeydown', event: { keyup: $root.checkLatLon}"/>
                             </div>
@@ -237,7 +233,7 @@
                     <td>
                         <button type="submit" class="btn btn-primary btn-block"
                                 data-bind="click: $root.updateCoordinates">
-                            Spara koordinater
+                            Save
                         </button>
                     </td>
                 </tr>
@@ -255,7 +251,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Laddar...</h4>
+                <h4 class="modal-title">Loading...</h4>
             </div>
             <div class="modal-body">
                 <div class="progress progress-striped active">
@@ -267,34 +263,11 @@
         </div>
     </div>
 </div>
-<!-- Modal Remove unit -->
-<div class="modal fade " id="removalModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-center">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Varning!</h4>
-            </div>
-            <div class="modal-body">
-                <p>Vill du verkligen ta bort den valda enheten?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bind="click: $root.deleteUnit"/>
-                Ja</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Nej</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/bootstrap.min.js"></script>
 
 </script>
-</
-body >
-<
-/
-html >
+</body >
+</html >

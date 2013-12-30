@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>0.0.3</title>
+    <title>0.0.4</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -35,20 +35,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="/"> <img src="pics/test.png"></a>
+			<a class="navbar-brand" href="/">HomeNode 0.0.4</a>
         </div>
-        <div class="collapse navbar-collapse">
+       <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="telldus">Lampor</a></li>
+                <li><a href="/telldus">Tellstick</a></li>
+                <li><a href="/sonos">Sonos</a></li>
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inställningar<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configure<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/configure">Tellstick</a></li>
-                        <li><a href="/configure-groups">Tellstick grupper</a></li>
-                        <li><a href="/configure-auto">Tellstick Automation</a></li>
+                        <li><a href="/configure">Tellstick units</a></li>
+                        <li><a href="/configure-groups">Tellstick groups</a></li>
+                        <li><a href="/configure-auto">Tellstick automation</a></li>
                     </ul>
                 </li>
-                <li><a href="about">Om</a></li>
+                <li><a href="/about">About</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
@@ -64,7 +65,7 @@
     <div class="col-md-4">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Enheter
+                Units
             </div>
             <table class="table">
                 <tbody data-bind="foreach: units">
@@ -86,7 +87,7 @@
                     <td>
                         <center>
                             <button class="btn btn-primary btn-block" data-bind="click: $root.updateConf">
-                                Skriv till konfigurationsfil
+                                Save to configuration
                             </button>
                         </center>
                     </td>
@@ -97,7 +98,7 @@
     <div class="col-md-4">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Lägg till ny
+                Add new
             </div>
             <table class="table">
                 <tbody>
@@ -109,7 +110,7 @@
                                 <input type="text" class="form-control" placeholder="Ex: 1" data-bind="value: newId"/>
                             </div>
                             <div class="form-group">
-                                <label>Namn</label>
+                                <label>Name</label>
                                 <input type="text" class="form-control" placeholder="Ex: Sovrummet"
                                        data-bind="value: newName"/>
                             </div>
@@ -132,7 +133,7 @@
     <div class="col-md-4">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Synkronisera enhet
+                Synchronize unit
             </div>
             <table class="table">
                 <tbody>
@@ -140,8 +141,7 @@
                     <td>
                         <span class="label label-warning">Info</span>
 
-                        <p>Det är viktigt att du precis satt in ditt uttag när du trycker på den blåa knappen, uttagen
-                            kan synkroniseras cirka 5 sekunder efter inkoppling.</p>
+                        <p>It is important that you press the Ok button in time from when you just powered on the unit.</p>
                     </td>
                 </tr>
                 <tr>
@@ -174,7 +174,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Laddar...</h4>
+                <h4 class="modal-title">Loading...</h4>
             </div>
             <div class="modal-body">
                 <div class="progress progress-striped active">
@@ -193,15 +193,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Varning!</h4>
+                <h4 class="modal-title">Warning!</h4>
             </div>
             <div class="modal-body">
-                <p>Vill du verkligen ta bort den valda enheten?</p>
+                <p>Really remove this unit?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bind="click: $root.deleteUnit"/>
-                Ja</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Nej</button>
+                Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>

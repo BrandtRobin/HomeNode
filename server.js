@@ -3,10 +3,13 @@ var mongoose = require('mongoose');
 var models = require('./models');
 var tdtool = require('./api/tdtool');
 var tellstick = require('./api/tellstick-conf');
+var sonos = require('./api/sonos.js');
 require('./api/timecheck');
 
 
+
 require('express-mongoose')
+// SET TO localhost ON DEPLOY
 mongoose.connect('mongodb://localhost/HomeNode', function (err) {
     if (err) throw err;
     var app = express();
@@ -42,6 +45,8 @@ mongoose.connect('mongodb://localhost/HomeNode', function (err) {
     app.post('/updatecoords', tellstick.updatecoords);
     app.post('/syncunit', tdtool.syncunit);
     app.post('/savechangemanauto', tdtool.savechangemanauto);
+    app.get('/currenttrack', sonos.CurrentTrack);
+    app.post('/controlsonos', sonos.Control);
     app.get('/', function (req, res) {
         res.sendfile(__dirname + '/views/index.htm');
     });
@@ -62,6 +67,9 @@ mongoose.connect('mongodb://localhost/HomeNode', function (err) {
     });
     app.get('/about', function (req, res) {
         res.sendfile(__dirname + '/views/about.htm');
+    });
+    app.get('/sonos', function (req, res) {
+        res.sendfile(__dirname + '/views/sonos.htm');
     });
 
 

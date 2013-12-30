@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>0.0.3</title>
+    <title>0.0.4</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -35,20 +35,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="/"> <img src="pics/test.png"></a>
+			<a class="navbar-brand" href="/">HomeNode 0.0.4</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="telldus">Lampor</a></li>
+                <li><a href="/telldus">Tellstick</a></li>
+                <li><a href="/sonos">Sonos</a></li>
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inställningar<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configure<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/configure">Tellstick</a></li>
-                        <li><a href="/configure-groups">Tellstick grupper</a></li>
-                        <li><a href="/configure-auto">Tellstick Automation</a></li>
+                        <li><a href="/configure">Tellstick units</a></li>
+                        <li><a href="/configure-groups">Tellstick groups</a></li>
+                        <li><a href="/configure-auto">Tellstick automation</a></li>
                     </ul>
                 </li>
-                <li><a href="about">Om</a></li>
+                <li><a href="/about">About</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
@@ -64,7 +65,7 @@
     <div class="col-md-4">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Grupper
+                Groups
             </div>
             <table class="table">
                 <tbody data-bind="foreach: groups">
@@ -87,7 +88,7 @@
     <div class="col-md-4">
         <div class="panel panel-black">
             <div class="panel-heading">
-                Lägg till ny grupp
+                Add new group
             </div>
             <table class="table">
                 <tbody>
@@ -99,7 +100,7 @@
                                 <input type="text" class="form-control" placeholder="Ex: 1" data-bind="value: newId"/>
                             </div>
                             <div class="form-group">
-                                <label>Namn</label>
+                                <label>Name</label>
                                 <input type="text" class="form-control" placeholder="Ex: Sovrummet"
                                        data-bind="value: newName"/>
                             </div>
@@ -113,7 +114,7 @@
                 <tr>
                     <td>
                         <center>
-                            <p>Valda enheter</p>
+                            <p>Units belonging to this group.</p>
                             <ul class="pagination" data-bind="foreach: units">
                                 <li><a href="#" data-bind="text: _id, click: $root.addMember"></a></li>
                             </ul>
@@ -140,7 +141,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Laddar...</h4>
+                <h4 class="modal-title">Loading...</h4>
             </div>
             <div class="modal-body">
                 <div class="progress progress-striped active">
@@ -159,15 +160,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Varning!</h4>
+                <h4 class="modal-title">Warning!</h4>
             </div>
             <div class="modal-body">
-                <p>Vill du verkligen ta bort den valda gruppen?</p>
+                <p>Really delete this group?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bind="click: $root.deleteGroup"/>
-                Ja</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Nej</button>
+                    Yes
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    No
+                </button>
             </div>
         </div>
     </div>

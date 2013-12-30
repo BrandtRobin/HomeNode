@@ -8,7 +8,8 @@
   "dependencies": {
     "express": "*",
     "mongoose": "*",
-    "express-mongoose": "*"
+    "express-mongoose": "*",
+    "sonos": "*"
   },
   "devDependencies": {
     "nodemon": "*"
