@@ -8,33 +8,39 @@ var s = new sonos.Sonos(sonos_host);
 // 	console.log(data);
 // });
 
-// s.queueSpotify(function(err, data) {
-// });
-
 var io = require('socket.io').listen(3000, { log: false });
 
-setInterval(function () {
-	var track;
-	s.currentTrack(function(err, track) {
-		if (err) {
-			track = {
-				'title': null
-			};
-		}
-		else {
-			s.getZoneAttrs(function(err,data) {
-				track.currentZone = data.CurrentZoneName;
-				s.getVolume(function(err,volume) {
-					track.volume = volume;
-					s.currentState(function(err, state) {
-						track.state = state;
-						io.sockets.emit('sonos', track);
+io.sockets.on('connection', function (socket) {
+	var disc = false;
+	socket.on('disconnect', function() {
+    	disc = true;
+    });
+
+	setInterval(function () {
+		if (!disc) {
+			var track;
+			s.currentTrack(function(err, track) {
+				if (err) {
+					track = {
+						'title': null
+					};
+				}
+				else {
+					s.getZoneAttrs(function(err,data) {
+						track.currentZone = data.CurrentZoneName;
+						s.getVolume(function(err,volume) {
+							track.volume = volume;
+							s.currentState(function(err, state) {
+								track.state = state;
+								io.sockets.emit('sonos', track);
+							});
+						});
 					});
-				});
+				}
 			});
 		}
-	});
-}, 500);
+	}, 500);
+});
 
 
 

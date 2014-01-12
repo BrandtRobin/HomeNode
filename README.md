@@ -25,6 +25,33 @@ You need to assure that the telldusd service is started for this application to 
 
 0.0.5
  * More sonos stuff (only one zone tested though), you now need the socket.io module. And change the string "var socket = io.connect('http://127.0.0.1:3000');" To your servers ip or dns name in the file viewmodels/sonos.viewmodel.js (gonna fix this later).
+
+ Until the sonos module is updated, add this to node_modules/sonos/lib/sonos.js:
+ 	/**
+	 * Spotify currentState
+	 * @param  {Function} callback (err, state)
+	 */
+	 Sonos.prototype.currentState = function(callback) {
+	  debug('Sonos.currentState(%j)', callback);
+	  var action = '"urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo"';
+	  var body = '<u:GetTransportInfo xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"><InstanceID>0</InstanceID></u:GetTransportInfo>';
+	  var state = null;
+
+	  return this.request(TRANSPORT_ENDPOINT, action, body, 'u:GetTransportInfoResponse', function(err, data) {
+	    if (err) return callback(err);
+	    if (JSON.stringify(data[0].CurrentTransportState) === '["STOPPED"]') {
+	      state = 'Stopped';
+	    }
+	    else if (JSON.stringify(data[0].CurrentTransportState) === '["PLAYING"]') {
+	      state = 'Playing';
+	    }
+	    else if (JSON.stringify(data[0].CurrentTransportState) === '["PAUSED_PLAYBACK"]') {
+	      state = 'Paused';
+	    }
+	    return callback(err, state);
+	  });
+	};
+
  * A html5 canvas is used to display all units, they are movable and clickable to toggle states. You can upload you're own background image aswell as long as its .png and not huge.
 
 0.0.4
