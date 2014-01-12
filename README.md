@@ -6,6 +6,9 @@ Home automation with Nodejs.
 Requirements: Nodejs , mongodb, tdtools.
 
 IMPORTANT!
+
+This setup is tested with my own environment and devices, it might crash, blow up, call you names.
+
 This setup has been tested with a tellstick, not duo or net.
 You need to assure that the telldusd service is started for this application to run.
 
@@ -14,7 +17,15 @@ You need to assure that the telldusd service is started for this application to 
 * Install nodejs modules with npm install
 * Start the server with nodemon server.js
 * Access the server on localhost:8888
-* The user starting server.js need to be able to run sudo without password in /etc/sudoers"
+* The user starting server.js need to be able to run sudo without password in /etc/sudoers ex:
+	# Allow members of group sudo to execute any command
+	#%sudo  ALL=(ALL:ALL) ALL <-- commented out
+	%sudo ALL=NOPASSWD: ALL <-- added
+
+
+0.0.5
+ * More sonos stuff (only one zone tested though), you now need the socket.io module. And change the string "var socket = io.connect('http://127.0.0.1:3000');" To your servers ip or dns name in the file viewmodels/sonos.viewmodel.js (gonna fix this later).
+ * A html5 canvas is used to display all units, they are movable and clickable to toggle states. You can upload you're own background image aswell as long as its .png and not huge.
 
 0.0.4
  * Sonos support (volume, start,stop,pause. tested with radiostations and spotify.
@@ -38,7 +49,7 @@ You need to assure that the telldusd service is started for this application to 
  * Most things should be responsive and viewable in a mobile device
 
 Planned
- * Use divs instead of tables where possible.
+ * Queue spotify songs, trying to contribute to https://github.com/bencevans/node-sonos
  * A better landing page.
  * Language selection, Swedish and English.
  * Error handling if mongodb is not connected at server startup.

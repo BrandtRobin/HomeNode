@@ -4,6 +4,39 @@ var sonos = require('sonos');
 var sonos_host = '13.37.1.133';
 var s = new sonos.Sonos(sonos_host);
 
+// s.queueSpotify(function(err, data) {
+// 	console.log(data);
+// });
+
+// s.queueSpotify(function(err, data) {
+// });
+
+var io = require('socket.io').listen(3000, { log: false });
+
+setInterval(function () {
+	var track;
+	s.currentTrack(function(err, track) {
+		if (err) {
+			track = {
+				'title': null
+			};
+		}
+		else {
+			s.getZoneAttrs(function(err,data) {
+				track.currentZone = data.CurrentZoneName;
+				s.getVolume(function(err,volume) {
+					track.volume = volume;
+					s.currentState(function(err, state) {
+						track.state = state;
+						io.sockets.emit('sonos', track);
+					});
+				});
+			});
+		}
+	});
+}, 500);
+
+
 
 function CurrentTrack(req,res) {
 	var track;
@@ -18,8 +51,10 @@ function CurrentTrack(req,res) {
 				track.currentZone = data.CurrentZoneName;
 				s.getVolume(function(err,volume) {
 					track.volume = volume;
-					// console.log(track);
-					res.send(track);
+					s.currentState(function(err, state) {
+						track.state = state;
+						res.send(track);
+					});
 				});
 			});
 		}
@@ -57,9 +92,6 @@ function Control(req, res) {
 
 		});
 		res.send(true);
-	}
-	else if (tmp.type == "spotify") {
-
 	}
 	else {
 		res.send(false);

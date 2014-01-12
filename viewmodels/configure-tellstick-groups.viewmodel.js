@@ -7,7 +7,7 @@ var ViewModel = function () {
 	self.members = ko.observableArray([]);
 	self.newId = ko.observable(null);
 	self.newName = ko.observable(null);
-	self.groupMembers = ko.observable('Inga enheter valda');
+	self.groupMembers = ko.observable('No units selected');
 
 	self.loadGroups = function () {
 		//$('#loadingModal').modal('show');
@@ -33,15 +33,15 @@ var ViewModel = function () {
 			var i = self.members.indexOf(unit._id);
 			self.members.splice(i, 1);
 			self.members.sort();
-			self.groupMembers('Lägg till ' + self.members());
+			self.groupMembers('Selected ' + self.members());
 		}
 		else {
 			self.members.push(unit._id);
 			self.members.sort();
-			self.groupMembers('Lägg till ' + self.members());
+			self.groupMembers('Selected ' + self.members());
 		}
 		if (self.members().length == 0) {
-			self.groupMembers('Inga enheter valda');
+			self.groupMembers('No units selected');
 		}
 	};
 
@@ -92,7 +92,7 @@ var ViewModel = function () {
 					self.newId(null);
 					self.newName(null);
 					self.loadGroups();
-					self.groupMembers('Inga enheter valda');
+					self.groupMembers('No units selected');
 				}
 			});
 		}

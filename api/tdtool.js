@@ -4,6 +4,8 @@ var groups = mongoose.model('Group');
 var configs = mongoose.model('Config');
 var sys = require('sys');
 var exec = require('child_process').exec;
+var fs = require('fs');
+var path = require('path');
 var child;
 
 listunits = function (req, res) {
@@ -133,6 +135,14 @@ addunit = function (req, res) {
 	});
 }
 
+updatemap = function (req, res) {
+	var toInsert = req.body;
+	units.update({_id:toInsert._id},{$set:{x:toInsert.x, y:toInsert.y}}, function (err, data) {
+		if (err) throw err;
+	});
+	res.json(JSON.stringify(true));
+}
+
 deleteunit = function (req, res) {
 	var toRemove = req.body;
 	units.findById(toRemove._id, function (err, data) {
@@ -221,6 +231,23 @@ savechangemanauto = function (req, res) {
 		});
 }
 
+uploadbg = function (req, res) {
+	var tempPath = req.files.file.path,
+        targetPath = path.resolve('pics/plan1.png');
+    if (path.extname(req.files.file.name).toLowerCase() === '.png') {
+        fs.rename(tempPath, targetPath, function(err) {
+        	// console.log('from ' + tempPath + ' to ' + targetPath);
+            if (err) throw err;
+            res.redirect('/map');
+        });
+    } else {
+        fs.unlink(tempPath, function () {
+            console.error("A dumdum uploaded something else than a .png...");
+            res.redirect('/map');
+        });
+    }	
+}
+
 exports.toggleall = toggleall;
 exports.toggleone = toggleone;
 exports.listunits = listunits;
@@ -235,3 +262,5 @@ exports.deletegroup = deletegroup;
 exports.addgroup = addgroup;
 exports.syncunit = syncunit;
 exports.savechangemanauto = savechangemanauto;
+exports.updatemap = updatemap;
+exports.uploadbg = uploadbg;

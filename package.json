@@ -9,7 +9,8 @@
     "express": "*",
     "mongoose": "*",
     "express-mongoose": "*",
-    "sonos": "*"
+    "sonos": "*",
+    "socket.io": "*"
   },
   "devDependencies": {
     "nodemon": "*"

@@ -7,10 +7,9 @@ var sonos = require('./api/sonos.js');
 require('./api/timecheck');
 
 
-
 require('express-mongoose')
 // SET TO localhost ON DEPLOY
-mongoose.connect('mongodb://localhost/HomeNode', function (err) {
+mongoose.connect('mongodb://127.0.0.1/HomeNode', function (err) {
     if (err) throw err;
     var app = express();
     app.configure(function () {
@@ -46,7 +45,9 @@ mongoose.connect('mongodb://localhost/HomeNode', function (err) {
     app.post('/syncunit', tdtool.syncunit);
     app.post('/savechangemanauto', tdtool.savechangemanauto);
     app.get('/currenttrack', sonos.CurrentTrack);
+    app.post('/uploadbg', tdtool.uploadbg);
     app.post('/controlsonos', sonos.Control);
+    app.post('/updatemap', tdtool.updatemap);
     app.get('/', function (req, res) {
         res.sendfile(__dirname + '/views/index.htm');
     });
@@ -71,7 +72,12 @@ mongoose.connect('mongodb://localhost/HomeNode', function (err) {
     app.get('/sonos', function (req, res) {
         res.sendfile(__dirname + '/views/sonos.htm');
     });
-
+    app.get('/map', function (req, res) {
+        res.sendfile(__dirname + '/views/map.htm');
+    });
+    app.get('/test', function (req, res) {
+        res.sendfile(__dirname + '/views/test.htm');
+    });
 
     app.listen(8888);
     console.log('Listening on port 8888...');

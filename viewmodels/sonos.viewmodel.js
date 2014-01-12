@@ -6,21 +6,19 @@ var ViewModel = function () {
     self.artist = ko.observable();
     self.album = ko.observable();
     self.albumArtURL = ko.observable();
-    self.currentzone = ko.observable('No zone found');
+    self.currentzone = ko.observable('Internal error or no zone found.');
     self.volume = ko.observable();
     self.position = ko.observable();
     self.duration = ko.observable();
     self.posdur = ko.observable();
+    self.state = ko.observable();
 
     self.currenttrack = function () {
         $("document").ready(function () {
-            $.getJSON("/currenttrack", function (data) {
-                if (data) {
-                    setTimeout(function () {    
-                        self.currenttrack();
-                    }, 5000);
-                }
+            var socket = io.connect('http://127.0.0.1:3000');
+                socket.on('sonos', function (data) {
                 self.volume(data.volume+'%');
+                self.state(data.state);
                 if(data.artist == null) {
                     self.title("Radio / No artist info.");
                     self.artist('');
@@ -65,9 +63,6 @@ var ViewModel = function () {
                 }
             }
         });
-        if (input == 'voldown' || input == 'volup') {
-            self.currenttrack();
-        }
     };
 
     (function () {

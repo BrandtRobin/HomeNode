@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>0.0.4</title>
+    <title>0.0.5</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -37,18 +37,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-			<a class="navbar-brand" href="/">HomeNode 0.0.4</a>
+			<a class="navbar-brand" href="/">HomeNode 0.0.5</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/telldus">Tellstick</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tellstick<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/telldus">Units/Group list</a></li>
+                        <li><a href="/map">Unit map</a></li>
+                    </ul>
+                </li>
                 <li><a href="/sonos">Sonos</a></li>
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configure<b class="caret"></b></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Configure<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/configure">Tellstick units</a></li>
                         <li><a href="/configure-groups">Tellstick groups</a></li>
-                        <li><a href="/configure-auto">Tellstick automation</a></li>
+                        <li><a href="#">Tellstick automation</a></li>
                     </ul>
                 </li>
                 <li><a href="/about">About</a></li>
@@ -175,11 +181,6 @@
                         <p>Type in your address to save a positions coordinates.</p>
                     </td>
                 </tr>
-                <!-- <tr>
-                  <td>
-                    <input class="form-control" placeholder="Skriv adress..." id="addresspicker_map" />
-                  </td>
-                </tr> -->
                 <tr>
                     <td>
                         <div class="input-group">

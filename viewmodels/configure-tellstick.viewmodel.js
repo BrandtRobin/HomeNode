@@ -7,10 +7,10 @@ var ViewModel = function () {
 	self.downTime = ko.observable(null);
 	self.newId = ko.observable(null);
 	self.newName = ko.observable(null);
-	self.AutoState = ko.observable('Laddar...');
-	self.lat = ko.observable('Laddar...');
-	self.lon = ko.observable('Laddar...');
-	self.choosensync = ko.observable('Ingen enhet vald.');
+	self.AutoState = ko.observable('Loading...');
+	self.lat = ko.observable('Loading...');
+	self.lon = ko.observable('Loading...');
+	self.choosensync = ko.observable('No unit selected');
 	self.syncmodalval = ko.observable(null);
 
 
@@ -23,7 +23,7 @@ var ViewModel = function () {
 	};
 
 	self.syncunit = function (unit) {
-		self.choosensync('Synkronisera enhet ' + unit._id);
+		self.choosensync('Sync unit ' + unit._id);
 		self.syncmodalval(unit._id);
 	};
 
@@ -105,7 +105,9 @@ var ViewModel = function () {
 			data = {
 				_id: self.newId(),
 				name: self.newName(),
-				state: false
+				state: false,
+				x: 0,
+				y: 0
 			};
 			$.ajax({
 				type: "POST",
