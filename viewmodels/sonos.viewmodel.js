@@ -1,21 +1,33 @@
 var ViewModel = function () {
     var self = this;
 
-    console.log('loading Sonos viewmodel (looping the currenttrack func)');
+    console.log('loading Sonos viewmodel');
     self.title = ko.observable();
     self.artist = ko.observable();
     self.album = ko.observable();
     self.albumArtURL = ko.observable();
-    self.currentzone = ko.observable('Internal error or no zone found.');
+    self.currentzone = ko.observable('Loading Zone info...');
     self.volume = ko.observable();
     self.position = ko.observable();
     self.duration = ko.observable();
     self.posdur = ko.observable();
     self.state = ko.observable();
+    self.nodeserver;
+
+    self.getconfig = function () {
+        $("document").ready(function () {
+            $.getJSON("getconfiguration", function (data) {
+                self.nodeserver = data.nodeserver;
+                self.currenttrack();
+            });
+        });
+    };
+
 
     self.currenttrack = function () {
         $("document").ready(function () {
-            var socket = io.connect('http://127.0.0.1:3000');
+            var socket = io.connect('http://' + self.nodeserver + ':3000');
+                console.log(self.nodeserver)
                 socket.on('sonos', function (data) {
                 self.volume(data.volume+'%');
                 self.state(data.state);
@@ -66,6 +78,6 @@ var ViewModel = function () {
     };
 
     (function () {
-        self.currenttrack();
+        self.getconfig();
     }(self));
 };

@@ -1,69 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
-
-    <title>0.0.5</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/starter-template.css" rel="stylesheet">
-
-</head>
-<script type="text/javascript" language="javascript" src="js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" language="javascript" src="js/knockout-2.1.0.js"></script>
-<script type="text/javascript" language="javascript" src="js/knockout.mapping-latest.js"></script>
-<script type="text/javascript" language="javascript" src="viewmodels/sonos.viewmodel.js"></script>
-<script type="text/javascript" language="javascript" src="http://flippy.osund.com:3000/socket.io/socket.io.js"></script>
-<script>
-    $(document).ready(function () {
-        ko.applyBindings(new ViewModel());
-    });
-</script>
+{% extends "layout.htm" %}
+{% block sonos %}
+{% endblock %}
+{% block content %}
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-			<a class="navbar-brand" href="/">HomeNode 0.0.5</a>
-        </div>
-       <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tellstick<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/telldus">Units/Group list</a></li>
-                        <li><a href="/map">Unit map</a></li>
-                    </ul>
-                </li>
-                <li class="active"><a href="#">Sonos</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configure<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/configure">Tellstick units</a></li>
-                        <li><a href="/configure-groups">Tellstick groups</a></li>
-                        <li><a href="/configure-auto">Tellstick automation</a></li>
-                    </ul>
-                </li>
-                <li><a href="/about">About</a></li>
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</div>
-
-
-<br><br>
-
 <div class="container">
     <div class="col-md-8">
         <div class="panel panel-black">
@@ -156,10 +95,6 @@
     </div>
 </div>
 </div>
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 <script src="js/bootstrap.min.js"></script>
-
 </body>
-</html>
+{% endblock %}

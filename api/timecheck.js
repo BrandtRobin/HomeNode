@@ -130,12 +130,16 @@ function check() {
 }
 
 //Fetch the time at script start.
-fetchdata(59.274302, 15.209713, function (data) {
-	var upH = data[0].sunrise.getHours();
-	var upM = data[0].sunrise.getMinutes();
-	var downH = data[0].sunset.getHours();
-	var downM = data[0].sunset.getMinutes();
-	updatetime(upH, upM, downH, downM);
+configs.findById(1, function (err, data) {
+    if (err) throw err;
+	//console.log('from db: ' + data.lat + ' ' + data.lon);
+    fetchdata(data.lat, data.lon, function (data) {
+        var upH = data[0].sunrise.getHours();
+        var upM = data[0].sunrise.getMinutes();
+        var downH = data[0].sunset.getHours();
+        var downM = data[0].sunset.getMinutes();
+	    updatetime(upH, upM, downH, downM);
+    });
 });
 
 //Start timer.

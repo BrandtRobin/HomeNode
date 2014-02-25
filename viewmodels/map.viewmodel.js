@@ -4,6 +4,9 @@ var ViewModel = function () {
 	console.log('loading Map viewmodel');
 	self.units = ko.observableArray([]);
 	self.edittext = ko.observable('Edit');
+	self.notification = ko.observable('');
+
+	$('#notification-div').hide();
 
 	//pretty file-input
 	$('input[type=file]').bootstrapFileInput();
@@ -64,6 +67,12 @@ var ViewModel = function () {
 			image_collection = images;
         	can.width = image_collection.bg.width; 
 			can.height = image_collection.bg.height;
+			for (i in self.units()) {
+				if (self.units()[i].x > can.width || self.units()[i].y > can.height) {
+					self.units()[i].x = 0;
+					self.units()[i].y = 0;
+				}
+			}
 			ctx.font="17px sans-serif";
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'white';
@@ -121,6 +130,8 @@ var ViewModel = function () {
 	     	searchPosition(mousePos.x, mousePos.y);
 	     }
 	     var placeunit = function(evt) {
+	     	$('#notification-div').hide();
+	     	self.notification('');
 	     	can.removeEventListener('mousemove', unitmover, false);
 	     	can.removeEventListener('mousedown', placeunit, false);
 	     	var mousePos = getMousePos(canvas, evt);
@@ -135,6 +146,8 @@ var ViewModel = function () {
 		     		if (y >= self.units()[i].y && y <= self.units()[i].y+unit_h) {
 		         		console.log('unit ' + self.units()[i]._id +  ' clicked');
 		         		if (self.editing) {
+		         			self.notification('Move mouse and click to place.');
+		         			$('#notification-div').show();
 		         			console.log('move ' + self.units()[i]._id);
 		         			self.unitToMove = self.units()[i]._id;
 		         			self.unitToMoveName = self.units()[i].name;
@@ -171,12 +184,14 @@ var ViewModel = function () {
 	self.editMode = function () {
 		if (self.editing) {
 			self.editing = false;
-			console.log('edit now inactive');
 			self.edittext('Edit');
+			$('#notification-div').hide();
 		}
 		else {
 			self.editing = true;
-			console.log('edit now active');
+			self.notification('');
+		    self.notification('Click the unit you want to move.');
+		    $('#notification-div').show();
 			self.edittext('Stop edit');
 		}
 	};

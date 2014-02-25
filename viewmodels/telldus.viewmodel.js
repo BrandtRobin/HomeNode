@@ -10,6 +10,7 @@ var ViewModel = function () {
 		$("document").ready(function () {
 			$.getJSON("units", function (data) {
 				self.units(data);
+				console.log(JSON.stringify(data));
 				//$('#loadingModal').modal('hide');
 				//$('#loading').hide();
 			});

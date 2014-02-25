@@ -174,7 +174,7 @@ var ViewModel = function () {
 			$.getJSON("conf", function (data) {
 				var addresspicker = $("#addresspicker").addresspicker();
 				var addresspickerMap = $("#addresspicker_map").addresspicker(
-					{
+                    {
 						regionBias: "se",
 						map: "#map_canvas",
 						typeaheaddelay: 1000,
@@ -183,8 +183,7 @@ var ViewModel = function () {
 							streetViewControl: false,
 							center: new google.maps.LatLng(data[0].lat, data[0].lon)
 						}
-					});
-
+                    });
 				addresspickerMap.on("addressChanged", function (evt, address) {
 					console.log(address.geometry.location.lat() + "," + address.geometry.location.lng())
 					console.log(address);

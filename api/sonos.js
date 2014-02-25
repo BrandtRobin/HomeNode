@@ -1,7 +1,7 @@
 var sonos = require('sonos');
-
+var configfile = require('../config');
 // IP IF BRIDGE OR CONTROLLING SPEAKER
-var sonos_host = '13.37.1.133';
+var sonos_host = configfile.sonoshost;
 var s = new sonos.Sonos(sonos_host);
 
 // s.queueSpotify(function(err, data) {
@@ -9,6 +9,11 @@ var s = new sonos.Sonos(sonos_host);
 // });
 
 var io = require('socket.io').listen(3000, { log: false });
+
+io.configure(function () {
+    io.set("transports", ["websocket", "xhr-polling"]); // support both
+      io.set("polling duration", 20);
+});
 
 io.sockets.on('connection', function (socket) {
 	var disc = false;
@@ -27,12 +32,30 @@ io.sockets.on('connection', function (socket) {
 				}
 				else {
 					s.getZoneAttrs(function(err,data) {
-						track.currentZone = data.CurrentZoneName;
+						if (err) {
+							track.currentZone = '';	
+						}
+						else {
+							track.currentZone = data.CurrentZoneName;	
+						}
+						
 						s.getVolume(function(err,volume) {
-							track.volume = volume;
+							if (err) {
+								track.volume = 0;
+							}
+							else {
+								track.volume = volume;	
+							}
 							s.currentState(function(err, state) {
-								track.state = state;
-								io.sockets.emit('sonos', track);
+								if (err) {
+									console.log('failed to fetch state from sonos.');
+									console.log(err);	
+								}
+								else {
+									track.state = state;
+									io.sockets.emit('sonos', track);	
+								}
+								
 							});
 						});
 					});

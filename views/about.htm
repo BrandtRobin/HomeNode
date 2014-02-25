@@ -1,64 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
-
-    <title>0.0.5</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <!-- Bootstrap switch CSS -->
-    <link href="css/bootstrap-switch.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/starter-template.css" rel="stylesheet">
-
-</head>
-<script type="text/javascript" language="javascript" src="js/jquery-2.0.3.min.js"></script>
+{% extends "layout.htm" %}
+{% block content %}
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-			<a class="navbar-brand" href="/">HomeNode 0.0.5</a>
-        </div>
-        <div class="collapse navbar-collapse">
-           <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tellstick<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/telldus">Units/Group list</a></li>
-                        <li><a href="/map">Unit map</a></li>
-                    </ul>
-                </li>
-                <li><a href="/sonos">Sonos</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configure<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/configure">Tellstick units</a></li>
-                        <li><a href="/configure-groups">Tellstick groups</a></li>
-                        <li><a href="/configure-auto">Tellstick automation</a></li>
-                    </ul>
-                </li>
-                <li class="active"><a href="#">About</a></li>
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</div>
-
-
-<br><br>
-
 <div class="container">
     <div class="col-md-8">
+        <strong>0.0.6</strong>
+        <li>Started building a dashboard where minimal control and overview will be displayed, configuration for this in the making.</li>
+        <li>Bought and tested tellstick duo, every 30th temperature sensor event is now saved.</li>
+        <li>Added some stuff to monitor temperature sensors, atm you need to figure out the ID via tdtools --list</li>
+        <li>No more hacking around with hostnames in the app, set ip/hostname in config.json</li>
+        <br>
         <strong>0.0.5</strong>
         <li>More sonos stuff (only one zone tested though), you now need the socket.io module. And change the string "var socket = io.connect('http://127.0.0.1:3000');" To your servers ip or dns name in the file viewmodels/sonos.viewmodel.js (gonna fix this later).</li>
         <li>A html5 canvas is used to display all units, they are movable and clickable to toggle states. You can upload you're own background image aswell as long as its .png and not huge.</li>
@@ -84,17 +34,11 @@
         <li>Most things should be responsive and viewable in a mobile device</li>
         <br>
         <strong>Planned</strong>
-        <li>Use divs instead of tables where possible.</li>
-        <li>A better landing page.</li>
-        <li>Language selection, Swedish and English.</li>
-        <li>Error handling if mongodb is not connected at server startup.</li>
+        <li>More configuration options for adding new tellstick devices.</li>
+        <li>Event driven update of Outlets, so a normal remote still can be used.</li>
+        <li>General error handling for all types of things. (if you arent using my setup it might blow up)</li>
     </div>
 </div>
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 <script src="js/bootstrap.min.js"></script>
-
 </body>
-</html>
+{% endblock %}

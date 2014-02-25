@@ -14,6 +14,11 @@ Custom
   padding-top: 20px;
 }
 
+.extra-bottom-spacing {
+  padding-bottom: 10px;
+}
+
+
 article,
 aside,
 details,
@@ -7143,3 +7148,4 @@ td.visible-print {
     display: none !important;
   }
 }
+

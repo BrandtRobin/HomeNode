@@ -1,22 +1,30 @@
+var configfile = require('./config');
 var express = require('express');
+var nunjucks  = require('nunjucks');
 var mongoose = require('mongoose');
 var models = require('./models');
 var tdtool = require('./api/tdtool');
 var tellstick = require('./api/tellstick-conf');
 var sonos = require('./api/sonos.js');
+var temperature = require('./api/temperature.js');
+var configuration = require('./api/configuration.js');
 require('./api/timecheck');
-
+require('./api/dbpurge');
 
 require('express-mongoose')
 // SET TO localhost ON DEPLOY
-mongoose.connect('mongodb://127.0.0.1/HomeNode', function (err) {
+mongoose.connect('mongodb://'+ configfile.mongoserver + '/HomeNode', function (err) {
     if (err) throw err;
     var app = express();
     app.configure(function () {
         app.use(express.logger('dev'));
-        /* 'default', 'short', 'tiny', 'dev' */
         app.use(express.static(__dirname));
         app.use(express.bodyParser());
+    });
+    
+    nunjucks.configure('views', {
+        autoescape: true,
+        express: app
     });
 
     // STATIC DIRS TO SERVE
@@ -48,37 +56,57 @@ mongoose.connect('mongodb://127.0.0.1/HomeNode', function (err) {
     app.post('/uploadbg', tdtool.uploadbg);
     app.post('/controlsonos', sonos.Control);
     app.post('/updatemap', tdtool.updatemap);
-    app.get('/', function (req, res) {
-        res.sendfile(__dirname + '/views/index.htm');
+    app.post('/todaystemperature', temperature.gettemperature);
+    app.get('/temperaturesensors', temperature.getConfiguredSensors);
+    app.post('/changeconfiguredsensor', temperature.changeConfiguredSensor);
+    app.post('/getdates', temperature.getDates);
+    app.get('/getconfiguration', configuration.sendconfig);
+
+    app.get('/', function(req, res) {
+        console.log('request from: ' + req.ip + ' to /');
+        res.render('index.htm', { page: 'index' });
     });
     app.get('/telldus', function (req, res) {
-        res.sendfile(__dirname + '/views/telldus.htm');
+        console.log('request from: ' + req.ip + ' to /telldus');
+        res.render('telldus.htm', { page: 'telldus' });
     });
-    app.get('/list', function (req, res) {
-        res.sendfile(__dirname + '/views/list.htm');
+    app.get('/telldus-speech', function (req, res) {
+        console.log('request from: ' + req.ip + ' to /telldus-speech');
+        res.render('telldus-speech.htm', { page: 'telldus-speech' });
     });
     app.get('/configure', function (req, res) {
-        res.sendfile(__dirname + '/views/configure-tellstick.htm');
+        console.log('request from: ' + req.ip + ' to /configure');
+        res.render('configure-tellstick.htm', { page: 'configure-tellstick' });
     });
     app.get('/configure-groups', function (req, res) {
-        res.sendfile(__dirname + '/views/configure-tellstick-groups.htm');
+        console.log('request from: ' + req.ip + ' to /configure-groups');
+        res.render('configure-tellstick-groups.htm', { page: 'configure-tellstick-groups' });
     });
     app.get('/configure-auto', function (req, res) {
-        res.sendfile(__dirname + '/views/configure-auto.htm');
+        console.log('request from: ' + req.ip + ' to /configure-auto');
+        res.render('configure-auto.htm', { page: 'configure-auto' });
     });
     app.get('/about', function (req, res) {
-        res.sendfile(__dirname + '/views/about.htm');
+        console.log('request from: ' + req.ip + ' to /about');
+        res.render('about.htm');
     });
     app.get('/sonos', function (req, res) {
-        res.sendfile(__dirname + '/views/sonos.htm');
+        console.log('request from: ' + req.ip + ' to /sonos');
+        res.render('sonos.htm', { page: 'sonos' });
     });
     app.get('/map', function (req, res) {
-        res.sendfile(__dirname + '/views/map.htm');
+        console.log('request from: ' + req.ip + ' to /map');
+        res.render('map.htm', { page: 'map' });
     });
-    app.get('/test', function (req, res) {
-        res.sendfile(__dirname + '/views/test.htm');
+    app.get('/temperatures', function (req, res) {
+        console.log('request from: ' + req.ip + ' to /temperatures');
+        res.render('temperature.htm', { page: 'temperature' });
+    });
+    app.get('/configure-temperatures', function (req, res) {
+        console.log('request from: ' + req.ip + ' to /configure-temperatures');
+        res.render('configure-temperatures.htm', { page: 'configure-temperatures' });
     });
 
-    app.listen(8888);
-    console.log('Listening on port 8888...');
+    app.listen(8787);
+    console.log('Listening on port 8787...');
 });

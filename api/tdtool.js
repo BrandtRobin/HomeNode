@@ -11,8 +11,9 @@ var child;
 listunits = function (req, res) {
 	units.find({}, null, {sort: {_id: 1}}, function (err, data) {
 		if (err) throw err;
-		res.send(data);
-	});
+// console.log(data);
+res.send(data);
+});
 }
 
 listgroups = function (req, res) {
@@ -30,37 +31,37 @@ getConf = function (req, res) {
 }
 
 getautovalue = function (req, res) {
-	// HANDLE ERRORS IF RECORD DOES NOT EXIST!
-	autotimes.findById(1, function (err, data) {
-		res.send(data.active);
-	});
+// HANDLE ERRORS IF RECORD DOES NOT EXIST!
+autotimes.findById(1, function (err, data) {
+	res.send(data.active);
+});
 }
 
 changeautogroup = function (req, res) {
-	// HANDLE ERRORS IF RECORD DOES NOT EXIST!
-	// ÄNDRA AUTOGRUPP I CONFIGS COLLECTION
-	console.log(req.body);
-	configs.update({_id: 1}, {group: req.body.group}, {upsert: true}, function (err, data) {
-		if (err) throw err;
-		res.json(JSON.stringify(true));
-	});
+// HANDLE ERRORS IF RECORD DOES NOT EXIST!
+// ÄNDRA AUTOGRUPP I CONFIGS COLLECTION
+// console.log(req.body);
+configs.update({_id: 1}, {group: req.body.group}, {upsert: true}, function (err, data) {
+	if (err) throw err;
+	res.json(JSON.stringify(true));
+});
 }
 
 toggleauto = function (req, res) {
-	// HANDLE ERRORS IF RECORD DOES NOT EXIST!
-	autotimes.findById(1, function (err, data) {
-		var state = data.active;
-		if (state == true) {
-			state = false;
-		}
-		else if (state == false) {
-			state = true;
-		}
-		autotimes.update({_id: 1}, {active: state}, {upsert: true}, function (err, data) {
-			if (err) throw err;
-			res.send(state);
-		});
+// HANDLE ERRORS IF RECORD DOES NOT EXIST!
+autotimes.findById(1, function (err, data) {
+	var state = data.active;
+	if (state == true) {
+		state = false;
+	}
+	else if (state == false) {
+		state = true;
+	}
+	autotimes.update({_id: 1}, {active: state}, {upsert: true}, function (err, data) {
+		if (err) throw err;
+		res.send(state);
 	});
+});
 
 }
 
@@ -201,12 +202,12 @@ syncunit = function (req, res) {
 	child = exec(str, function (error, stdout, stderr) {
 		if (error !== null) {
 			console.log('exec error: ' + error);
-			//Do not send a response, modal will not show if error occured.
-		}
-		else {
-			res.json(JSON.stringify(true));
-		}
-	});
+//Do not send a response, modal will not show if error occured.
+}
+else {
+	res.json(JSON.stringify(true));
+}
+});
 }
 
 savechangemanauto = function (req, res) {
@@ -233,19 +234,19 @@ savechangemanauto = function (req, res) {
 
 uploadbg = function (req, res) {
 	var tempPath = req.files.file.path,
-        targetPath = path.resolve('pics/plan1.png');
-    if (path.extname(req.files.file.name).toLowerCase() === '.png') {
-        fs.rename(tempPath, targetPath, function(err) {
-        	// console.log('from ' + tempPath + ' to ' + targetPath);
-            if (err) throw err;
-            res.redirect('/map');
-        });
-    } else {
-        fs.unlink(tempPath, function () {
-            console.error("A dumdum uploaded something else than a .png...");
-            res.redirect('/map');
-        });
-    }	
+	targetPath = path.resolve('pics/plan1.png');
+	if (path.extname(req.files.file.name).toLowerCase() === '.png') {
+		fs.rename(tempPath, targetPath, function(err) {
+// console.log('from ' + tempPath + ' to ' + targetPath);
+if (err) throw err;
+res.redirect('/map');
+});
+	} else {
+		fs.unlink(tempPath, function () {
+			console.error("A dumdum uploaded something else than a .png...");
+			res.redirect('/map');
+		});
+	}	
 }
 
 exports.toggleall = toggleall;

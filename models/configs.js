@@ -17,6 +17,7 @@ var schema = mongoose.Schema({
 	manDownActive: Boolean,
 	autoUpActive: Boolean,
 	autoDownActive: Boolean,
+	configuredSensors: [{id: Number,name: String,}],
 });
 
 module.exports = mongoose.model('Config', schema);
