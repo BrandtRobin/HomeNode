@@ -7,21 +7,26 @@ Requirements: Nodejs , mongodb, tdtools.
 
 IMPORTANT!
 
-This setup is tested with my own environment and devices, it might crash, blow up, call you names.
+This setup is tested with my own environment and devices, it might crash, blow up and call you names.
 
-This setup has been tested with a tellstick, not duo or net.
 You need to assure that the telldusd service is started for this application to run.
 
-* Unpack the compressed archive db.tar.gz and use the dumpdir HomeNode to import it into a mongodb database called HomeNode.
-  ( mongorestore -d HomeNode db/HomeNode )
+* Unpack the compressed archive db.tar.gz and use the dumpdir db_dump to import it into a mongodb database called HomeNode.
+  ( mongorestore -d HomeNode db/db_dump )
 * Install nodejs modules with npm install
 * Start the server with nodemon server.js
-* Access the server on localhost:8888
+* Access the server on localhost:8787
 * The user starting server.js need to be able to run sudo without password in /etc/sudoers ex:
 	# Allow members of group sudo to execute any command
 	#%sudo  ALL=(ALL:ALL) ALL <-- commented out
 	%sudo ALL=NOPASSWD: ALL <-- added
 
+
+0.0.6
+ * Started building a dashboard where minimal control and overview will be displayed, configuration for this in the making.
+ * Bought and tested tellstick duo, every 30th temperature sensor event is now saved.
+ * Added some stuff to monitor temperature sensors, atm you need to figure out the ID via tdtools --list
+ * No more hacking around with hostnames in the app, set ip/hostname in config.json
 
 0.0.5
  * More sonos stuff (only one zone tested though), you now need the socket.io module. And change the string "var socket = io.connect('http://127.0.0.1:3000');" To your servers ip or dns name in the file viewmodels/sonos.viewmodel.js (gonna fix this later).
@@ -76,7 +81,6 @@ You need to assure that the telldusd service is started for this application to 
  * Most things should be responsive and viewable in a mobile device
 
 Planned
- * Queue spotify songs, trying to contribute to https://github.com/bencevans/node-sonos
- * A better landing page.
- * Language selection, Swedish and English.
- * Error handling if mongodb is not connected at server startup.
+ * More configuration options for adding new tellstick devices.
+ * Event driven update of Outlets, so a normal remote still can be used.
+ * General error handling for all types of things. (if you arent using my setup it might blow up)
