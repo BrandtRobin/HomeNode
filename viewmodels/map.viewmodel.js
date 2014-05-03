@@ -20,7 +20,6 @@ var ViewModel = function () {
 				self.loadMap();
 			});
 		});
-
 	};
 
 	self.editing = false;
@@ -168,6 +167,7 @@ var ViewModel = function () {
 									$('#loadingModal').modal('show');
 									setTimeout(function () {
 										$('#loadingModal').modal('hide');
+										can.removeEventListener('mousedown', mousemover, false);
 										self.loadUnits();
 									}, 3000);
 								}

@@ -11,9 +11,8 @@ var child;
 listunits = function (req, res) {
 	units.find({}, null, {sort: {_id: 1}}, function (err, data) {
 		if (err) throw err;
-// console.log(data);
-res.send(data);
-});
+		res.send(data);
+	});
 }
 
 listgroups = function (req, res) {

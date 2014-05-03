@@ -5,6 +5,8 @@ var ViewModel = function () {
     self.temperature = ko.observable('waiting for sensor..');
     self.nodeserver;
     self.tmpfloat = 0;
+    // STATIC, FETCH THIS ASWELL WHEN MORE SENSORS ARE CONFIGURED FOR VIEWING.
+    self.device = "Outside";
 
     self.getconfig = function () {
         $("document").ready(function () {
@@ -18,12 +20,16 @@ var ViewModel = function () {
     self.gettemps = function () {
         var socket = io.connect('http://' + self.nodeserver + ':3001');
         console.log('connecting socket 3001');
-        socket.on('temperature', function (value, name) {
-            console.log(name + ' : ' + value);
-            self.temperature(name + ' ' + value);
-            self.tmpfloat = parseFloat(value);
-            var point = chart.series[0].points[0];
-            point.update(self.tmpfloat);
+        socket.on('temperature', function (value, deviceId) {
+            // STATIC DISPLAY OUTSIDE UNTIL FIXED
+            console.log('recieved: ' + deviceId + ' : ' + value);
+            if (deviceId == 195) {
+                console.log('updating: ' + deviceId + ' : ' + value);
+                self.temperature(deviceId + ' ' + value);
+                self.tmpfloat = parseFloat(value);
+                var point = chart.series[0].points[0];
+                point.update(self.tmpfloat);
+            }
         });
     };
 
@@ -109,7 +115,13 @@ var ViewModel = function () {
             },
             
             title: {
-                text: ''
+                text: self.device,
+                floating: true,
+                verticalAlign: 'bottom',
+                style: {
+                    color: '#000000',
+                    fontSize: '14px'
+                }
             },
             
             pane: {

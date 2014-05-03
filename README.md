@@ -7,6 +7,8 @@ Requirements: Nodejs , mongodb, tdtools.
 
 IMPORTANT!
 
+Still using a pretty old version of nodejs and express, will get the latest and adapt det code when i get the time.
+
 This setup is tested with my own environment and devices, it might crash, blow up and call you names.
 
 You need to assure that the telldusd service is started for this application to run.

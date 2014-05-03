@@ -3,7 +3,7 @@
 <body>
 <div class="container">
     <div class="col-md-4">
-        <div class="panel panel-black">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 Configured sensors
             </div>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-black">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 Add sensor
             </div>
@@ -59,9 +59,18 @@
 </div>
 <div class="container">
     <div class="col-md-6">
-        <div class="panel panel-black">
+        <div class="panel panel-default">
             <div class="panel-heading">
-                List sensors 
+                Sensors tdtool discovered nearby
+            </div>
+            <div class="panel-body">
+              <table data-bind="foreach: tellduslist">
+                  <tr>
+                      <td>
+                          <p data-bind="text: sensor"></p>
+                      </td>
+                  </tr>
+              </table>
             </div>
         </div>
     </div>

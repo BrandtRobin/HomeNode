@@ -4,6 +4,7 @@ var ViewModel = function () {
 	self.sensor = ko.observable();
 	self.newId = ko.observable(null);
 	self.newName = ko.observable(null);
+    self.tellduslist = ko.observableArray();
 
 	console.log('loading Configure temperatures viewmodel');
 
@@ -61,7 +62,17 @@ var ViewModel = function () {
 		});
 	};
 
+    self.telldusSensors = function () {
+        $("document").ready(function () {
+            $.getJSON("tellduslist", function (data) {
+                self.tellduslist(data);
+            });
+        });
+    };
+
+
 	(function () {
 		self.loadConfiguredSensors();
+        self.telldusSensors();
 	}(self));
 };

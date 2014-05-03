@@ -6,10 +6,23 @@ var ViewModel = function () {
     var dataArrayFinal = Array();
     self.recieveddatasize = 0;
     self.sensors = ko.observableArray([]);
+    //TMP NAME FOR SENSORS TO DISPLAY
+    self.selectedsensor = "Temp sensor";
+
+    self.datepicker = function() {
+        // $('#datetimepicker1').datetimepicker({
+        //     pickTime: false
+        // });
+        $('#sandbox-container .input-group.date').datepicker({
+            format: "yyyy/mm/dd",
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true
+        });
+    };
 
     self.loadData = function (sensor) {
         // Really ugly to overwrite the name with selcted date.. but hey..
-        // Tidy up before sending.
         delete sensor.dates;
         console.log('got: ' + JSON.stringify(sensor));
         self.today = sensor.name.replace(/-/g, '/');
@@ -18,9 +31,16 @@ var ViewModel = function () {
         var tmpday = parseInt(tmparr[2]);
         tmpday += 1;
         tmpday = tmpday.toString();
-        self.tomorrow = self.tomorrow.slice(0, -2);
+        if (self.tomorrow.length == 8) {
+            self.tomorrow = self.tomorrow.slice(0, -1);    
+        }
+        else if (self.tomorrow.length == 9) {
+            self.tomorrow = self.tomorrow.slice(0, -2);
+        }
+        else {
+            console.log('cannot reformat date!');
+        }
         self.tomorrow = self.tomorrow + tmpday;
-        // self.tomorrow = 
         console.log(self.today + ' : ' + self.tomorrow);
         $.ajax({
             type: "POST",
@@ -51,7 +71,7 @@ var ViewModel = function () {
             $.getJSON("temperaturesensors", function (data) {
                 // console.log('got: ' + JSON.stringify(data.sensors));
                 self.sensors(data.sensors);
-                // console.log(JSON.stringify(self.sensors()[0].dates));
+                console.log('dates ' + JSON.stringify(self.sensors()[0].dates));
                 // self.loadDates();
             });
         });
@@ -67,7 +87,6 @@ var ViewModel = function () {
             });
         }
         else {
-            // console.log(new Date(1391174472 * 1000))
             $('#container').highcharts({
                 chart: {
                     type: 'line',
@@ -119,5 +138,6 @@ var ViewModel = function () {
     (function () {
         self.loadConfiguredSensors();
         self.nographchoosen();
+        self.datepicker();
     }(self));
 };

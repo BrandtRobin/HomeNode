@@ -5,11 +5,16 @@ var mongoose = require('mongoose');
 var models = require('./models');
 var tdtool = require('./api/tdtool');
 var tellstick = require('./api/tellstick-conf');
-var sonos = require('./api/sonos.js');
+//var sonos = require('./api/sonos.js');
 var temperature = require('./api/temperature.js');
 var configuration = require('./api/configuration.js');
 require('./api/timecheck');
 require('./api/dbpurge');
+
+//Find whats crashing
+process.on('uncaughtException', function(err) {
+    console.error(err.stack);
+});
 
 require('express-mongoose')
 // SET TO localhost ON DEPLOY
@@ -52,15 +57,16 @@ mongoose.connect('mongodb://'+ configfile.mongoserver + '/HomeNode', function (e
     app.post('/updatecoords', tellstick.updatecoords);
     app.post('/syncunit', tdtool.syncunit);
     app.post('/savechangemanauto', tdtool.savechangemanauto);
-    app.get('/currenttrack', sonos.CurrentTrack);
+    //app.get('/currenttrack', sonos.CurrentTrack);
     app.post('/uploadbg', tdtool.uploadbg);
-    app.post('/controlsonos', sonos.Control);
+    //app.post('/controlsonos', sonos.Control);
     app.post('/updatemap', tdtool.updatemap);
     app.post('/todaystemperature', temperature.gettemperature);
     app.get('/temperaturesensors', temperature.getConfiguredSensors);
     app.post('/changeconfiguredsensor', temperature.changeConfiguredSensor);
     app.post('/getdates', temperature.getDates);
     app.get('/getconfiguration', configuration.sendconfig);
+    app.get('/tellduslist', temperature.listtelldussensors);
 
     app.get('/', function(req, res) {
         console.log('request from: ' + req.ip + ' to /');
@@ -90,10 +96,10 @@ mongoose.connect('mongodb://'+ configfile.mongoserver + '/HomeNode', function (e
         console.log('request from: ' + req.ip + ' to /about');
         res.render('about.htm');
     });
-    app.get('/sonos', function (req, res) {
-        console.log('request from: ' + req.ip + ' to /sonos');
-        res.render('sonos.htm', { page: 'sonos' });
-    });
+    // app.get('/sonos', function (req, res) {
+    //     console.log('request from: ' + req.ip + ' to /sonos');
+    //     res.render('sonos.htm', { page: 'sonos' });
+    // });
     app.get('/map', function (req, res) {
         console.log('request from: ' + req.ip + ' to /map');
         res.render('map.htm', { page: 'map' });

@@ -17,8 +17,10 @@ io.configure(function () {
 
 io.sockets.on('connection', function (socket) {
 	var disc = false;
+    console.log('A client connected from port 3000');
 	socket.on('disconnect', function() {
     	disc = true;
+    console.log('A client disconnected from port 3000');
     });
 
 	setInterval(function () {

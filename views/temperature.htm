@@ -3,7 +3,7 @@
 <body>
 <div class="container">
     <div class="col-md-10">
-        <div class="panel panel-black">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 Temperatures today
             </div>
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="col-md-5">
-        <div class="panel panel-black">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 Sensors
             </div>
@@ -24,7 +24,7 @@
                     <td data-bind="text: name"></td>
                     <td>
                         <!--
-                        Extremt fulhack, skriver över name med datument i arrayen som är valt.
+                        fulhack, skriver över name med datument i arrayen som är valt.
                         Vill egentligen skicka med både valt datum + deviceID.
                         -->
                         <select data-bind="options: dates, value: name, optionsCaption: 'Choose date',event: {change: $root.loadData }"></select>
@@ -34,6 +34,11 @@
             </table>
         </div>
     </div>
+    <!-- <div class="col-md-4">
+        <div class="input-group date">
+            <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+    </div> -->
     <!-- Modal -->
     <div class="modal fade " id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">

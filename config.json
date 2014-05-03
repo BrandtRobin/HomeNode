@@ -1,5 +1,5 @@
 {
-    "nodeserver": "13.37.1.24",
+    "nodeserver": "flippy.osund.com",
     "mongoserver": "13.37.1.24",
     "sonoshost": "13.37.1.133"
 }

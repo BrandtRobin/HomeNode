@@ -10,24 +10,23 @@ function purgedb() {
     setTimeout(function () {
         var curdate = new Date();
         curday = curdate.getDay();
-        console.log('startday: ' + startday + ' curday: ' + curday);
+        //console.log('startday: ' + startday + ' curday: ' + curday);
         if (curday != startday) {
-            console.log('purging db static beyond 10 days');
             var d = new Date();
+            d.setDate(d.getDate() - self.numToPurge);
             var year = d.getFullYear();
             var month = d.getMonth()+1;
-            var day = d.getDate()-self.numToPurge;
+            var day = d.getDate();
             var purgedate = year + '-' + month + '-' + day;
-            console.log('change! ' + purgedate);
+            console.log('purgedate is: ' + purgedate);
             // fs.appendFile('./temp.log', 'dbpurge ' + purgedate + '\n', function (err) {
             // });
-            temperature.remove({date:purgedate}, function(err) {
+            temperature.remove({date: {$lte:purgedate}}, function(err) {
                 startday = curday;
             });
-
         }
         purgedb();
     }, 3600000);
 // }, 10000);
 }
-purgedb();
+// purgedb();
